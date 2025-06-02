@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dự Đoán Tài Xỉu AI VIP - Có Phê Duyệt Thiết Bị</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(135deg, #000428, #004e92);
+      color: #fff;
+      padding: 40px 20px;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00f7ff;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-shadow: 0 0 12px #00eaff;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 12px #00eaff; }
+      to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff; }
+    }
+
+    .box {
+      max-width: 600px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 30px 30px 40px;
+      box-shadow: 0 0 25px rgba(0,234,255,0.2), 0 0 40px rgba(0,234,255,0.1);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    label {
+      font-size: 1rem;
+      width: 40%;
+    }
+
+    input[type="number"], input[type="text"] {
+      width: 55%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1.1rem;
+      text-align: center;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    input[type="number"]:focus, input[type="text"]:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00eaff;
+      background: rgba(0,234,255,0.1);
+    }
+
+    button {
+      padding: 12px 35px;
+      background: #00eaff;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 20px auto 10px;
+      display: block;
+      transition: 0.3s;
+      user-select: none;
+    }
+
+    button:hover:not(:disabled) {
+      background: #00c0d1;
+      transform: scale(1.05);
+    }
+
+    button:disabled {
+      background: #00707f;
+      cursor: not-allowed;
+      transform: none;
+      opacity: 0.6;
+    }
+
+    .result {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-top: 30px;
+      color: #ffd700;
+      font-weight: bold;
+      min-height: 40px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .tags {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 8px;
+      padding: 8px 16px;
+      background: rgba(0, 234, 255, 0.15);
+      border: 1px solid #00eaff66;
+      border-radius: 30px;
+      color: #00eaff;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 0 6px rgba(0,234,255,0.3);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Login Modal */
+    #loginModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #loginBox {
+      background: #001e30;
+      border-radius: 16px;
+      padding: 30px 40px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 40px #00eaffaa;
+      text-align: center;
+    }
+
+    #loginBox h2 {
+      margin-bottom: 25px;
+      color: #00ffff;
+      text-shadow: 0 0 8px #00eaff;
+      font-size: 1.8rem;
+    }
+
+    #vipKey {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1.2rem;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
+
+    #vipKey:focus {
+      outline: none;
+      box-shadow: 0 0 15px #00eaff;
+      background: rgba(0,234,255,0.15);
+    }
+
+    #loginBtn {
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      background: #00eaff;
+      color: #000;
+      transition: 0.3s;
+    }
+
+    #loginBtn:hover {
+      background: #00c0d1;
+      transform: scale(1.05);
+    }
+
+    #loginError {
+      color: #ff5555;
+      margin-top: 12px;
+      min-height: 20px;
+      font-weight: bold;
+    }
+
+    /* Disable form when locked */
+    .locked input, .locked button {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔮 AI Dự Đoán Tài Xỉu VIP</h1>
+
+  <div class="box locked" id="mainBox">
+    <div class="input-group">
+      <label for="sum1">🎲 Tổng phiên 1:</label>
+      <input type="number" id="sum1" min="3" max="18" disabled />
+    </div>
+    <div class="input-group">
+      <label for="sum2">🎲 Tổng phiên 2:</label>
+      <input type="number" id="sum2" min="3" max="18" disabled />
+    </div>
+    <div class="input-group">
+      <label for="sum3">🎲 Tổng phiên 3:</label>
+      <input type="number" id="sum3" min="3" max="18" disabled />
+    </div>
+
+    <button onclick="analyze()" disabled id="analyzeBtn">🚀 Phân tích & Dự đoán AI</button>
+
+    <div id="output" class="result"></div>
+    <div id="tags" class="tags"></div>
+  </div>
+
+  <footer>© 2025 AI Tài Xỉu Premium – Design by Duc Nam💎</footer>
+
+  <!-- Login Modal -->
+  <div id="loginModal">
+    <div id="loginBox">
+      <h2>🔑 Nhập Key VIP để truy cập</h2>
+      <input type="text" id="vipKey" placeholder="Nhập key VIP tại đây..." autocomplete="off" />
+      <button id="loginBtn" onclick="attemptLogin()">Đăng nhập</button>
+      <div id="loginError"></div>
+    </div>
+  </div>
+
+  <script>
+    const VIP_KEYS = ['VIP2025', 'DucNamKey', 'AIxiu123']; // Danh sách key VIP hợp lệ (bạn có thể mở rộng hoặc check backend)
+
+    const loginModal = document.getElementById('loginModal');
+    const mainBox = document.getElementById('mainBox');
+    const inputs = mainBox.querySelectorAll('input');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const loginError = document.getElementById('loginError');
+
+    // Tạo fingerprint thiết bị đơn giản dựa trên userAgent + platform + timezone offset
+    function getDeviceFingerprint() {
+      const ua = navigator.userAgent;
+      const platform = navigator.platform;
+      const timezone = new Date().getTimezoneOffset();
+      return btoa(ua + '|' + platform + '|' + timezone);
+    }
+
+    // Kiểm tra xem thiết bị đã được phê duyệt chưa
+    function checkDeviceApproved() {
+      const approvedFingerprint = localStorage.getItem('approvedDevice');
+      return approvedFingerprint === getDeviceFingerprint();
+    }
+
+    // Kích hoạt UI khi đăng nhập thành công
+    function unlockUI() {
+      loginModal.style.display = 'none';
+      mainBox.classList.remove('locked');
+      inputs.forEach(i => i.disabled = false);
+      analyzeBtn.disabled = false;
+      loginError.innerText = '';
+    }
+
+    // Nếu thiết bị được phê duyệt thì tự động mở
+    if (checkDeviceApproved()) {
+      unlockUI();
+    } else {
+      loginModal.style.display = 'flex';
+    }
+
+    // Xử lý đăng nhập key
+    function attemptLogin() {
+      const key = document.getElementById('vipKey').value.trim();
+      if (!key) {
+        loginError.innerText = '⚠️ Vui lòng nhập key VIP!';
+        return;
+      }
+
+      if (VIP_KEYS.includes(key)) {
+        // Lưu thiết bị đã phê duyệt
+        localStorage.setItem('approvedDevice', getDeviceFingerprint());
+        unlockUI();
+      } else {
+        loginError.innerText = '❌ Key không hợp lệ. Vui lòng thử lại.';
+      }
+    }
+
+    function analyze() {
+      const sums = [
+        parseInt(document.getElementById('sum1').value),
+        parseInt(document.getElementById('sum2').value),
+        parseInt(document.getElementById('sum3').value),
+      ];
+
+      if (sums.some(isNaN)) {
+        alert("⚠️ Vui lòng nhập đủ cả 3 tổng phiên!");
+        return;
+      }
+
+      let tagsHTML = '';
+      let pattern = [];
+      let tai = 0, xiu = 0;
+
+      sums.forEach((sum, idx) => {
+        const result = sum >= 11 ? 'Tài' : 'Xỉu';
+        pattern.push(result);
+        result === 'Tài' ? tai++ : xiu++;
+        tagsHTML += `<div class="tag">Phiên ${idx + 1}: ${sum} → ${result}</div>`;
+      });
+
+      // AI logic nâng cao
+      let prediction = '';
+      const [first, second, third] = pattern;
+
+      // Một số logic nâng cao hơn, ví dụ dùng trọng số dựa trên chuỗi
+      const weightedTai = sums.reduce((acc, val, i) => acc + (val >= 11 ? (i+1)*1.2 : 0), 0);
+      const weightedXiu = sums.reduce((acc, val, i) => acc + (val < 11 ? (i+1)*1.2 : 0), 0);
+
+      if (first === second && second === third) {
+        prediction = `🤖 AI VIP: Đảo chiều sau chuỗi 3 lần liên tiếp là <strong>${third === 'Tài' ? 'Xỉu' : 'Tài'}</strong>.`;
+      } else if (weightedTai > weightedXiu) {
+        prediction = `🤖 AI VIP: Nghiêng về <strong>Xỉu</strong> (Tài đang chiếm ưu thế).`;
+      } else if (weightedXiu > weightedTai) {
+        prediction = `🤖 AI VIP: Nghiêng về <strong>Tài</strong> (Xỉu đang chiếm ưu thế).`;
+      } else if (third === second) {
+        prediction = `🤖 AI VIP: Theo mô hình lặp lại, dự đoán <strong>${third === 'Tài' ? 'Xỉu' : 'Tài'}</strong>.`;
+      } else {
+        prediction = `🤖 AI VIP: 50/50 – Cân bằng, hãy cẩn trọng!`;
+      }
+
+      document.getElementById('output').innerHTML = prediction;
+      document.getElementById('tags').innerHTML = tagsHTML;
+    }
+  </script>
+
+</body>
+</html>
